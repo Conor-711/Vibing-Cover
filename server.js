@@ -1,8 +1,28 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 3001;
+
+// MongoDB连接 - 替换为您的MongoDB连接字符串
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/vibing-cover';
+
+// 连接到MongoDB
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// 定义邮箱模型
+const Email = mongoose.model('Email', new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+}));
 
 // Parse form data
 app.use(express.urlencoded({ extended: true }));
@@ -20,15 +40,20 @@ app.post('/submit', (req, res) => {
   const email = req.body.email;
   console.log(`Received email: ${email}`);
   
-  // Save email to file
-  const emailsFilePath = path.join(__dirname, 'emails.txt');
-  fs.appendFile(emailsFilePath, email + '\n', (err) => {
-    if (err) {
-      console.error('Error saving email:', err);
-    } else {
-      console.log('Email saved successfully');
-    }
-  });
+  // 保存邮箱到MongoDB
+  const newEmail = new Email({ email });
+  newEmail.save()
+    .then(() => {
+      console.log('Email saved to database successfully');
+    })
+    .catch(err => {
+      // 如果邮箱已存在，不要将其视为错误
+      if (err.code === 11000) { // MongoDB duplicate key error code
+        console.log('Email already exists in database');
+      } else {
+        console.error('Error saving email to database:', err);
+      }
+    });
   res.send(`<!DOCTYPE html>
 <html lang="en">
 <head>
