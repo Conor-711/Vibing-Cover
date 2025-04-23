@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="500" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="50" y="100" font-family="Arial" font-size="60" font-weight="bold" fill="#2E5A35">SLOW</text>
+  <text x="50" y="170" font-family="Arial" font-size="60" font-weight="bold" fill="#2E5A35">DOWN,</text>
+  <text x="50" y="240" font-family="Arial" font-size="60" font-weight="bold" fill="#2E5A35">YOU'RE</text>
+  <text x="50" y="310" font-family="Arial" font-size="60" font-weight="bold" fill="#2E5A35">DOING</text>
+  <text x="50" y="380" font-family="Arial" font-size="60" font-weight="bold" fill="#2E5A35">FINE</text>
+</svg>
