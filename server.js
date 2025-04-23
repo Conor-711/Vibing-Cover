@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -17,6 +19,16 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
   const email = req.body.email;
   console.log(`Received email: ${email}`);
+  
+  // Save email to file
+  const emailsFilePath = path.join(__dirname, 'emails.txt');
+  fs.appendFile(emailsFilePath, email + '\n', (err) => {
+    if (err) {
+      console.error('Error saving email:', err);
+    } else {
+      console.log('Email saved successfully');
+    }
+  });
   res.send(`<!DOCTYPE html>
 <html lang="en">
 <head>
