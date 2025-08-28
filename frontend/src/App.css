@@ -1,0 +1,1040 @@
+/* Polymarket-inspired styles with authentic design */
+:root {
+  --pm-blue: #3b82f6;
+  --pm-green: #10b981;
+  --pm-red: #ef4444;
+  --pm-gray: #6b7280;
+  --pm-light-gray: #f9fafb;
+  --pm-border: #e5e7eb;
+  --pm-text: #111827;
+  --pm-text-light: #6b7280;
+  --pm-text-lighter: #9ca3af;
+  --pm-background: #ffffff;
+  --pm-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --pm-hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--pm-light-gray);
+  color: var(--pm-text);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header - Authentic Polymarket style */
+.app-header {
+  background: var(--pm-background);
+  border-bottom: 1px solid var(--pm-border);
+  padding: 0 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--pm-blue);
+  text-decoration: none;
+}
+
+.logo-icon {
+  font-size: 24px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Navigation - Polymarket tabs style */
+.app-nav {
+  background: var(--pm-background);
+  border-bottom: 1px solid var(--pm-border);
+  padding: 0 1rem;
+}
+
+.app-nav {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pm-text-light);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.nav-btn:hover {
+  color: var(--pm-text);
+}
+
+.nav-btn.active {
+  color: var(--pm-blue);
+  border-bottom-color: var(--pm-blue);
+}
+
+/* Main Content */
+.app-main {
+  flex: 1;
+  background: var(--pm-light-gray);
+}
+
+.app-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Button Styles - Authentic Polymarket design */
+.btn-primary {
+  background: var(--pm-blue);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.5;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.btn-primary:disabled {
+  background: var(--pm-gray);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--pm-background);
+  color: var(--pm-text);
+  border: 1px solid var(--pm-border);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--pm-light-gray);
+  border-color: var(--pm-gray);
+}
+
+/* Yes/No buttons - Polymarket authentic style */
+.btn-yes {
+  background: var(--pm-green);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 60px;
+}
+
+.btn-yes:hover {
+  background: #059669;
+}
+
+.btn-no {
+  background: var(--pm-red);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 60px;
+}
+
+.btn-no:hover {
+  background: #dc2626;
+}
+
+/* Action buttons */
+.btn-join,
+.btn-resolve,
+.btn-claim,
+.btn-view {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  transition: all 0.15s ease;
+}
+
+.btn-join { background: var(--pm-blue); color: white; }
+.btn-resolve { background: #f59e0b; color: white; }
+.btn-claim { background: var(--pm-green); color: white; }
+.btn-view { background: var(--pm-gray); color: white; }
+
+/* Wallet Connect - Polymarket style */
+.wallet-connect button {
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.wallet-connect.connected .wallet-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 8px 12px;
+  background: var(--pm-light-gray);
+  border-radius: 6px;
+}
+
+.wallet-address {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pm-text);
+}
+
+.wallet-balance {
+  font-size: 12px;
+  color: var(--pm-text-light);
+}
+
+/* Network Status */
+.network-status {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.network-status.connected {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.network-status.disconnected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Contract Status */
+.contract-status {
+  background: var(--pm-background);
+  border: 1px solid var(--pm-border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: var(--pm-card-shadow);
+}
+
+.contract-status h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--pm-text);
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.status-deployed {
+  color: var(--pm-green);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.status-not-deployed {
+  color: var(--pm-red);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* Topic List Header */
+.topic-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.topic-list-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pm-text);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Markets Grid - Authentic Polymarket card design */
+.markets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+}
+
+/* Polymarket Card - Exact replica */
+.polymarket-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.polymarket-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-color: #d1d5db;
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px 16px 12px 16px;
+  gap: 12px;
+}
+
+.market-icon {
+  flex-shrink: 0;
+}
+
+.icon-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.market-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.market-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.market-volume {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.market-chance {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.chance-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+.chance-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Outcomes Section */
+.outcomes-section {
+  padding: 0 16px 16px 16px;
+}
+
+.outcome-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.outcome-row.secondary {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+.outcome-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.outcome-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.outcome-percentage {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.outcome-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.outcome-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  min-width: 60px;
+}
+
+.yes-btn {
+  background: #10b981;
+  color: white;
+}
+
+.yes-btn:hover {
+  background: #059669;
+}
+
+.no-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.no-btn:hover {
+  background: #dc2626;
+}
+
+.btn-label {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.btn-price {
+  font-size: 11px;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  height: 4px;
+  background: #f3f4f6;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Card Footer */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-top: 1px solid #f3f4f6;
+}
+
+.participants {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.participant-indicator {
+  font-size: 11px;
+  color: #6b7280;
+  background: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+.no-participants {
+  font-size: 11px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.market-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.status-waiting {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-resolved {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.status-claimed {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* Loading and Error States */
+.loading,
+.no-topics {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--pm-text-light);
+  font-size: 16px;
+}
+
+.error-message {
+  text-align: center;
+  padding: 24px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.error-message p {
+  margin: 0 0 12px 0;
+  color: #991b1b;
+}
+
+/* Create Topic Form */
+.create-topic {
+  background: var(--pm-background);
+  border: 1px solid var(--pm-border);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: var(--pm-card-shadow);
+}
+
+.create-topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.create-topic-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--pm-text);
+}
+
+.create-topic-form {
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pm-text);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--pm-border);
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.15s ease;
+  background: var(--pm-background);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--pm-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group small {
+  display: block;
+  font-size: 12px;
+  color: var(--pm-text-light);
+  margin-top: 4px;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.option-input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.option-input input {
+  flex: 1;
+}
+
+.btn-remove {
+  background: var(--pm-red);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.add-option-btn {
+  align-self: flex-start;
+}
+
+.balance-info {
+  padding: 12px;
+  background: var(--pm-light-gray);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.balance-info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.insufficient-balance {
+  color: var(--pm-red) !important;
+  font-weight: 500;
+  margin-top: 6px !important;
+}
+
+.create-btn {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px;
+  font-weight: 600;
+}
+
+/* Deploy Contract */
+.deploy-contract {
+  background: var(--pm-background);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--pm-card-shadow);
+  border-left: 4px solid #f59e0b;
+}
+
+.deploy-header h3 {
+  margin: 0 0 16px 0;
+  color: var(--pm-text);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.deploy-content p {
+  margin: 8px 0;
+  color: var(--pm-text-light);
+  line-height: 1.5;
+}
+
+.problem-explanation {
+  margin: 20px 0;
+  padding: 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+}
+
+.problem-explanation h4 {
+  margin: 0 0 8px 0;
+  color: #991b1b;
+  font-size: 16px;
+}
+
+.problem-explanation ul {
+  margin: 8px 0 0 20px;
+  color: #991b1b;
+}
+
+.solutions {
+  margin: 20px 0;
+}
+
+.solutions h4 {
+  margin: 0 0 16px 0;
+  color: #059669;
+  font-size: 16px;
+}
+
+.solution-option {
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid #d1fae5;
+  border-radius: 6px;
+  background: #f0fdf4;
+}
+
+.solution-option h5 {
+  margin: 0 0 8px 0;
+  color: #059669;
+  font-size: 14px;
+}
+
+.solution-option ol,
+.solution-option ul {
+  margin: 8px 0 0 20px;
+  color: #059669;
+}
+
+/* Topic Detail Modal */
+.topic-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.topic-detail {
+  background: var(--pm-background);
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.topic-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid var(--pm-border);
+}
+
+.topic-detail-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--pm-text);
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--pm-text-light);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.btn-close:hover {
+  background: var(--pm-light-gray);
+}
+
+.topic-detail-content {
+  padding: 20px;
+}
+
+.topic-info {
+  margin-bottom: 24px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--pm-border);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item .label {
+  font-weight: 500;
+  color: var(--pm-text-light);
+  font-size: 14px;
+}
+
+.action-section {
+  margin: 24px 0;
+  padding: 20px;
+  background: var(--pm-light-gray);
+  border-radius: 6px;
+}
+
+.action-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--pm-text);
+}
+
+.warning-text {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin: 12px 0;
+}
+
+.winner-message {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.claim-amount {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--pm-text);
+  margin-bottom: 16px;
+}
+
+/* Footer */
+.app-footer {
+  background: var(--pm-text);
+  color: white;
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  margin-top: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .markets-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .header-content {
+    padding: 0 16px;
+  }
+  
+  .app-content {
+    padding: 16px 12px;
+  }
+  
+  .polymarket-card {
+    margin: 0 8px;
+  }
+  
+  .card-header {
+    padding: 12px 12px 8px 12px;
+    gap: 8px;
+  }
+  
+  .icon-placeholder {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .market-title {
+    font-size: 15px;
+  }
+  
+  .chance-number {
+    font-size: 20px;
+  }
+  
+  .outcomes-section {
+    padding: 0 12px 12px 12px;
+  }
+  
+  .outcome-buttons {
+    gap: 4px;
+  }
+  
+  .outcome-btn {
+    padding: 6px 8px;
+    min-width: 50px;
+  }
+  
+  .card-footer {
+    padding: 8px 12px;
+  }
+  
+  .topic-detail {
+    margin: 10px;
+    max-height: 95vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .topic-list-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .nav-btn {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .topic-list-header h2 {
+    font-size: 24px;
+  }
+  
+  .markets-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .polymarket-card {
+    margin: 0;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .market-chance {
+    align-self: flex-end;
+    text-align: right;
+  }
+  
+  .outcome-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .outcome-buttons {
+    justify-content: center;
+  }
+}
