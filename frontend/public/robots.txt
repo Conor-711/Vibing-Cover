@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Block crawling of sensitive areas
+Disallow: /admin
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://your-app.railway.app/sitemap.xml
