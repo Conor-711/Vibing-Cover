@@ -1,185 +1,187 @@
-# 🎯 预测市场 DApp
+# Prediction Market DApp 🎯
 
-一个基于Base链的去中心化预测市场应用，支持用户创建议题、参与对赌、裁定结果和领取奖金。使用ETH作为投注货币，无需额外代币。
+A decentralized prediction market application built on the Base blockchain, featuring a Polymarket-inspired UI design.
 
-## 🚀 快速开始
+![Prediction Market](https://img.shields.io/badge/Blockchain-Base-blue)
+![Smart Contracts](https://img.shields.io/badge/Smart%20Contracts-Solidity-green)
+![Frontend](https://img.shields.io/badge/Frontend-React%20TypeScript-blue)
+![UI Style](https://img.shields.io/badge/UI%20Style-Polymarket-purple)
 
-### 环境要求
-- Node.js 22+ (推荐 22.10.0 LTS)
-- MetaMask 钱包
-- Git
+## 🌟 Features
 
-### 📦 安装依赖
+### Core Functionality
+- **Two-Player Prediction Markets**: Players bet against each other on custom topics
+- **ETH-Based Betting**: Direct ETH staking without intermediary tokens
+- **Creator Arbitration**: Market creators have sole authority to resolve outcomes
+- **Automatic Payouts**: Winners claim rewards through smart contract interactions
+- **Real-time Updates**: Live blockchain state synchronization
 
+### Technical Features
+- **Base Chain Integration**: Deployed on Base Sepolia testnet and mainnet-ready
+- **MetaMask Wallet Support**: Seamless wallet connection and transaction management
+- **Responsive Design**: Mobile-first approach with desktop optimization
+- **Smart Contract Security**: ReentrancyGuard protection and validated state transitions
+- **TypeScript Safety**: Full type coverage for reliable development
+
+### UI/UX Highlights
+- **Polymarket-Style Cards**: Authentic market card design with percentage bars
+- **Progressive Enhancement**: Graceful fallbacks for network issues
+- **State Management**: Intelligent loading states and error handling
+- **English Interface**: Fully internationalized for global users
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v16 or higher)
+- MetaMask browser extension
+- Base testnet ETH for testing
+
+### Installation
 ```bash
-# 克隆项目
-git clone <your-repo-url>
-cd prediction-market-dapp
+# Clone the repository
+git clone https://github.com/Conor-711/Vibing-Cover.git
+cd Vibing-Cover
 
-# 安装后端依赖
-npm install --legacy-peer-deps
-
-# 安装前端依赖
-cd frontend
+# Install dependencies
 npm install
+cd frontend && npm install && cd ..
+
+# Start the frontend
+cd frontend && npm start
 ```
 
-### 🔧 配置网络
-
-#### 本地开发网络 (推荐用于测试)
-
-1. **启动本地网络**
+### Deployment
 ```bash
-# 在项目根目录
-npx hardhat node --port 8545
+# Compile contracts
+npx hardhat compile
+
+# Deploy to Base Sepolia
+npx hardhat run scripts/deploy-eth.js --network base-sepolia
+
+# Update contract address in frontend/src/config/contracts.ts
 ```
 
-2. **在MetaMask中添加本地网络**
-```
-网络名称: Hardhat Local
-RPC URL: http://127.0.0.1:8545
-Chain ID: 1337
-货币符号: ETH
-```
-
-3. **导入测试账户**
-使用Hardhat提供的测试账户私钥导入到MetaMask
-
-#### Base网络配置
-
-**Base Sepolia 测试网:**
-```
-网络名称: Base Sepolia
-RPC URL: https://sepolia.base.org
-Chain ID: 84532
-货币符号: ETH
-区块浏览器: https://sepolia.basescan.org
-```
-
-**Base 主网:**
-```
-网络名称: Base
-RPC URL: https://mainnet.base.org
-Chain ID: 8453
-货币符号: ETH
-区块浏览器: https://basescan.org
-```
-
-### 📋 部署合约
-
-**注意: 由于Node.js 23.x版本兼容性问题，建议使用Node.js 22.x**
-
-```bash
-# 如果使用Node.js 22.x
-npx hardhat run scripts/deploy-local.js --network localhost
-
-# 如果使用Node.js 23.x，可以尝试
-npm install --save-dev @types/node
-npx hardhat run scripts/deploy-local.js --network localhost
-```
-
-### 🖥️ 启动应用
-
-```bash
-# 启动前端 (在frontend目录下)
-cd frontend
-npm start
-```
-
-应用将在 http://localhost:3000 启动
-
-## 🎮 使用说明
-
-### 基本流程
-
-1. **连接钱包** - 点击"连接MetaMask"
-2. **检查网络** - 确保连接到支持的网络
-3. **获取测试ETH** - 从Base Sepolia水龙头获取测试ETH
-4. **创建议题** - 输入标题、选项、投注金额(ETH)
-5. **参与对赌** - 其他用户可以加入议题
-6. **裁定结果** - 创建者裁定获胜选项
-7. **领取奖金** - 获胜者领取奖池资金
-
-### 功能特性
-
-- ✅ 多选项预测支持
-- ✅ 固定金额投注(ETH)
-- ✅ 创建者裁定机制
-- ✅ 自动资金分配
-- ✅ 实时状态更新
-- ✅ 多网络支持
-
-## 🛠️ 开发
-
-### 目录结构
+## 📁 Project Structure
 
 ```
 prediction-market-dapp/
-├── contracts/              # 智能合约
-├── scripts/                # 部署脚本
-├── test/                   # 合约测试
-├── frontend/               # React前端
+├── contracts/                 # Smart contracts
+│   ├── PredictionMarketETH.sol   # Main ETH betting contract
+│   ├── PredictionMarket.sol      # USDC version (legacy)
+│   └── MockUSDC.sol             # Testing token
+├── frontend/                  # React application
 │   ├── src/
-│   │   ├── components/     # UI组件
-│   │   ├── contexts/       # React Context
-│   │   ├── utils/          # 工具函数
-│   │   └── types/          # TypeScript类型
-└── README.md
+│   │   ├── components/          # UI components
+│   │   ├── contexts/           # React contexts
+│   │   ├── types/              # TypeScript definitions
+│   │   ├── utils/              # Web3 utilities
+│   │   └── config/             # Contract configurations
+│   └── public/                 # Static assets
+├── scripts/                   # Deployment scripts
+└── test/                     # Contract tests
 ```
 
-### 合约测试
+## 🎮 How to Use
 
+1. **Connect Wallet**: Click "Connect MetaMask" to link your wallet
+2. **Create Market**: Navigate to "Create Market" and set up your prediction
+3. **Join Markets**: Browse available markets and place your bets
+4. **Resolve Outcomes**: Creators resolve markets when events conclude
+5. **Claim Rewards**: Winners manually claim their ETH rewards
+
+## 🛠 Smart Contract Details
+
+### PredictionMarketETH.sol
+- **Two-player limit**: Each market supports exactly 2 participants
+- **Fixed bet amounts**: Standardized staking for fair competition
+- **Creator arbitration**: Built-in governance for outcome decisions
+- **ETH native**: No token dependencies, direct ETH transactions
+- **Event emission**: Comprehensive logging for frontend synchronization
+
+### Key Functions
+- `createTopic()`: Initialize new prediction markets
+- `joinTopic()`: Participate in existing markets
+- `resolveTopic()`: Declare winning outcomes (creator only)
+- `claimReward()`: Withdraw winnings (winner only)
+
+## 🌐 Network Configuration
+
+### Base Sepolia Testnet
+- **Chain ID**: 84532
+- **RPC URL**: https://sepolia.base.org
+- **Faucet**: https://sepolia.base.org (for test ETH)
+- **Contract Address**: `0xD875233ca5c9f9B641D8609fb0d7b86714fbD24F`
+
+### Base Mainnet
+- **Chain ID**: 8453
+- **RPC URL**: https://mainnet.base.org
+- **Contract**: Ready for mainnet deployment
+
+## 🎨 UI Design Philosophy
+
+The interface closely mimics [Polymarket](https://polymarket.com)'s design system:
+- **Card-based layout**: Clean market cards with essential information
+- **Percentage visualization**: Dynamic progress bars and statistics
+- **Yes/No buttons**: Intuitive green/red betting interface
+- **Professional typography**: Modern font stack and spacing
+- **Responsive grid**: Adaptive layouts for all screen sizes
+
+## 🔧 Development
+
+### Local Development
 ```bash
-# 运行合约测试
+# Start Hardhat node
+npx hardhat node
+
+# Deploy contracts locally
+npx hardhat run scripts/deploy-eth.js --network localhost
+
+# Run tests
 npx hardhat test
 ```
 
-### 前端开发
-
-```bash
-# 启动开发服务器
-cd frontend
-npm start
-
-# 构建生产版本
-npm run build
+### Environment Setup
+Create `.env` files with:
+```
+PRIVATE_KEY=your_private_key_here
+BASE_SEPOLIA_RPC=https://sepolia.base.org
 ```
 
-## 🔧 故障排除
+## 📋 Features Roadmap
 
-### Node.js版本问题
+- [x] ETH-based betting markets
+- [x] Polymarket-style UI design
+- [x] Two-player market mechanics
+- [x] Creator arbitration system
+- [x] Real-time state synchronization
+- [ ] Multi-player markets
+- [ ] Automated resolution (Chainlink oracles)
+- [ ] Market discovery and search
+- [ ] Advanced analytics dashboard
+- [ ] Mobile app development
 
-如果遇到Hardhat兼容性问题：
+## 🤝 Contributing
 
-1. **推荐方案**: 安装Node.js 22.x LTS
-```bash
-# 使用nvm管理Node版本
-nvm install 22.10.0
-nvm use 22.10.0
-```
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-2. **临时方案**: 使用配置好的合约地址（已在代码中配置）
+## ⚠️ Disclaimer
 
-### 获取测试ETH
+This is a demonstration project for educational purposes. Please exercise caution when using real funds on blockchain networks. Always verify smart contract addresses and test thoroughly before mainnet deployment.
 
-1. 访问 [Base Sepolia Faucet](https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet)
-2. 输入你的钱包地址
-3. 等待测试ETH到账（通常几分钟内）
+## 📄 License
 
-### 钱包连接问题
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-1. 确保MetaMask已安装
-2. 检查网络配置
-3. 确认合约已部署到当前网络
+## 🔗 Links
 
-## 📝 许可证
+- **GitHub Repository**: [https://github.com/Conor-711/Vibing-Cover](https://github.com/Conor-711/Vibing-Cover)
+- **Base Network**: [https://base.org](https://base.org)
+- **Design Inspiration**: [https://polymarket.com](https://polymarket.com)
 
-MIT License
+---
 
-## 🤝 贡献
-
-欢迎提交Issue和Pull Request！
-
-## ⚠️ 免责声明
-
-这是一个演示项目，仅用于学习和测试目的。在生产环境使用前请进行充分的安全审计。
+**Built with ❤️ for the decentralized prediction market ecosystem**
