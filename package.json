@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cd frontend && npm run serve",
+    "build": "cd frontend && npm run build",
+    "install-frontend": "cd frontend && npm install",
+    "dev": "cd frontend && npm start",
+    "test": "cd frontend && npm test",
+    "railway:build": "cd frontend && npm install && npm run build",
+    "railway:start": "cd frontend && npm run serve"
   },
   "keywords": [],
   "author": "",
