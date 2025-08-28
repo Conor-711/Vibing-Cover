@@ -216,7 +216,7 @@ const TopicList: React.FC<TopicListProps> = ({ onTopicSelect }) => {
                   <div className="outcome-row secondary">
                     <div className="outcome-info">
                       <span className="outcome-label">{topic.options[1]}</span>
-                      <span className="outcome-percentage">{option2Percentage}%</span>
+                      <span className="outcome-percentage">{100 - option1Percentage}%</span>
                     </div>
                   </div>
                 )}
