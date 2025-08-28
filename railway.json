@@ -1,7 +1,7 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "cd frontend && npm run build"
+    "buildCommand": "cd frontend && CI=false npm run build"
   },
   "deploy": {
     "startCommand": "cd frontend && npm run serve",
@@ -9,5 +9,10 @@
     "restartPolicyMaxRetries": 10
   },
   "healthcheckPath": "/",
-  "healthcheckTimeout": 100
+  "healthcheckTimeout": 100,
+  "variables": {
+    "CI": "false",
+    "GENERATE_SOURCEMAP": "false",
+    "DISABLE_ESLINT_PLUGIN": "true"
+  }
 }

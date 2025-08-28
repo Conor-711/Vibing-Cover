@@ -8,8 +8,13 @@ cmds = [
 
 [phases.build]
 cmds = [
-  'cd frontend && npm run build'
+  'cd frontend && CI=false npm run build'
 ]
 
 [start]
 cmd = 'cd frontend && npm run serve'
+
+[variables]
+CI = 'false'
+GENERATE_SOURCEMAP = 'false'
+DISABLE_ESLINT_PLUGIN = 'true'

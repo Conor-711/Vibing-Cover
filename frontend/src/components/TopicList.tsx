@@ -99,23 +99,7 @@ const TopicList: React.FC<TopicListProps> = ({ onTopicSelect }) => {
     }
   };
 
-  const canJoin = (topic: Topic) => {
-    return walletInfo && 
-           topic.status === TopicStatus.WAITING_FOR_SECOND_PLAYER && 
-           topic.creator.toLowerCase() !== walletInfo.address.toLowerCase();
-  };
 
-  const canResolve = (topic: Topic) => {
-    return walletInfo && 
-           topic.status === TopicStatus.ACTIVE && 
-           topic.creator.toLowerCase() === walletInfo.address.toLowerCase();
-  };
-
-  const canClaim = (topic: Topic) => {
-    return walletInfo && 
-           topic.status === TopicStatus.RESOLVED && 
-           topic.winner.toLowerCase() === walletInfo.address.toLowerCase();
-  };
 
   if (loading) {
     return (
@@ -166,13 +150,9 @@ const TopicList: React.FC<TopicListProps> = ({ onTopicSelect }) => {
           const option1Players = topic.players.filter((_, playerIndex) => 
             topic.playerChoices[playerIndex] === 0
           ).length;
-          const option2Players = topic.players.filter((_, playerIndex) => 
-            topic.playerChoices[playerIndex] === 1
-          ).length;
           
           const totalPlayers = topic.players.filter(p => p !== "").length;
           const option1Percentage = totalPlayers > 0 ? Math.round((option1Players / totalPlayers) * 100) : 50;
-          const option2Percentage = totalPlayers > 0 ? (100 - option1Percentage) : 50;
           
           return (
             <div key={topic.id} className="polymarket-card" onClick={() => onTopicSelect(topic)}>
