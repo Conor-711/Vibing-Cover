@@ -1,0 +1,55 @@
+# Railway ignore file - exclude development dependencies and build artifacts
+
+# Development dependencies and tools
+node_modules/
+*/node_modules/
+hardhat.config.js
+scripts/
+test/
+contracts/
+artifacts/
+cache/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs (except frontend/build which we need)
+dist/
+build/
+!frontend/build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Temporary files
+tmp/
+temp/
+
+# Package files
+*.tgz
+
+# Documentation that's not needed in production
+DEPLOYMENT.md
+README.md

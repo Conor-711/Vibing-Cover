@@ -5,34 +5,15 @@
   "scripts": {
     "start": "cd frontend && npm run serve",
     "build": "cd frontend && npm run build",
-    "install-frontend": "cd frontend && npm install",
     "dev": "cd frontend && npm start",
-    "test": "cd frontend && npm test",
-    "railway:build": "cd frontend && npm install && npm run build",
-    "railway:start": "cd frontend && npm run serve"
+    "test": "cd frontend && npm test"
   },
-  "keywords": [],
+  "keywords": ["blockchain", "prediction-market", "base", "react"],
   "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
-    "@nomicfoundation/hardhat-ethers": "^4.0.0",
-    "@nomicfoundation/hardhat-ignition-ethers": "^3.0.1",
-    "@nomicfoundation/hardhat-network-helpers": "^3.0.0",
-    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
-    "@nomicfoundation/hardhat-verify": "^3.0.0",
-    "@typechain/ethers-v6": "^0.5.1",
-    "@typechain/hardhat": "^9.1.0",
-    "chai": "^6.0.1",
-    "ethers": "^6.15.0",
-    "hardhat": "^3.0.2",
-    "hardhat-gas-reporter": "^2.3.0",
-    "solidity-coverage": "^0.8.16",
-    "typescript": "^5.9.2"
-  },
-  "dependencies": {
-    "@openzeppelin/contracts": "^5.4.0"
-  },
-  "type": "module"
+  "license": "MIT",
+  "description": "Decentralized prediction market DApp on Base blockchain",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
 }
