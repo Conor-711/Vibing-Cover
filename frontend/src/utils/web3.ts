@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { Topic, WalletInfo } from '../types/contracts';
+import { Topic, CompositeTopic, CompositeBet, OptionBetInfo, WalletInfo } from '../types/contracts';
 import { getContractAddresses } from '../config/contracts';
 import PredictionMarketABI from '../contracts/PredictionMarketETH.json';
 
@@ -267,7 +267,8 @@ export const getAllTopics = async (retryCount = 2, forceRefresh = false): Promis
           totalPool: ethers.formatEther(topic.totalPool),
           status: Number(topic.status),
           winningOption: Number(topic.winningOption),
-          winner: topic.winner
+          winner: topic.winner,
+          isComposite: false
         };
         
         console.log(`议题 ${id} 状态:`, {
@@ -343,5 +344,307 @@ export const checkContractsDeployed = async (): Promise<{
     return {
       predictionMarket: false
     };
+  }
+};
+
+// ==================== 组合议题相关函数 ====================
+
+// 创建组合议题
+export const createCompositeTopic = async (
+  title: string,
+  referencedTopicIds: number[],
+  minBetAmount: string
+) => {
+  try {
+    const provider = getProvider();
+    const signer = await provider.getSigner();
+    
+    const predictionContract = await getPredictionMarketContract(signer);
+    const amount = ethers.parseEther(minBetAmount);
+    
+    // 创建组合议题
+    const createTx = await predictionContract.createCompositeTopic(
+      title, 
+      referencedTopicIds, 
+      amount
+    );
+    const receipt = await createTx.wait();
+    
+    console.log('创建组合议题交易确认，区块号:', receipt.blockNumber);
+    
+    // 触发状态同步事件
+    window.dispatchEvent(new CustomEvent('topicStateChanged', { 
+      detail: { action: 'createComposite', txHash: receipt.hash, blockNumber: receipt.blockNumber } 
+    }));
+    
+    return receipt;
+  } catch (error) {
+    console.error('Failed to create composite topic:', error);
+    throw error;
+  }
+};
+
+// 对组合议题的某个选项下注
+export const betOnCompositeOption = async (
+  topicId: number, 
+  optionIndex: number, 
+  betAmount: string
+) => {
+  try {
+    const provider = getProvider();
+    const signer = await provider.getSigner();
+    
+    const predictionContract = await getPredictionMarketContract(signer);
+    const amount = ethers.parseEther(betAmount);
+    
+    // 对选项下注
+    const betTx = await predictionContract.betOnCompositeOption(topicId, optionIndex, {
+      value: amount
+    });
+    const receipt = await betTx.wait();
+    
+    console.log('组合议题下注交易确认，区块号:', receipt.blockNumber);
+    
+    // 触发状态同步事件
+    window.dispatchEvent(new CustomEvent('topicStateChanged', { 
+      detail: { action: 'betComposite', topicId, txHash: receipt.hash, blockNumber: receipt.blockNumber } 
+    }));
+    
+    return receipt;
+  } catch (error) {
+    console.error('Failed to bet on composite option:', error);
+    throw error;
+  }
+};
+
+// 解决组合议题
+export const resolveCompositeTopic = async (topicId: number) => {
+  try {
+    const provider = getProvider();
+    const signer = await provider.getSigner();
+    const predictionContract = await getPredictionMarketContract(signer);
+    
+    const resolveTx = await predictionContract.resolveCompositeTopic(topicId);
+    const receipt = await resolveTx.wait();
+    
+    console.log('解决组合议题交易确认，区块号:', receipt.blockNumber);
+    
+    // 触发状态同步事件
+    window.dispatchEvent(new CustomEvent('topicStateChanged', { 
+      detail: { action: 'resolveComposite', topicId, txHash: receipt.hash, blockNumber: receipt.blockNumber } 
+    }));
+    
+    return receipt;
+  } catch (error) {
+    console.error('Failed to resolve composite topic:', error);
+    throw error;
+  }
+};
+
+// 领取组合议题奖金
+export const claimCompositeReward = async (topicId: number) => {
+  try {
+    const provider = getProvider();
+    const signer = await provider.getSigner();
+    const predictionContract = await getPredictionMarketContract(signer);
+    
+    const claimTx = await predictionContract.claimCompositeReward(topicId);
+    const receipt = await claimTx.wait();
+    
+    console.log('领取组合议题奖励交易确认，区块号:', receipt.blockNumber);
+    
+    // 触发状态同步事件
+    window.dispatchEvent(new CustomEvent('topicStateChanged', { 
+      detail: { action: 'claimComposite', topicId, txHash: receipt.hash, blockNumber: receipt.blockNumber } 
+    }));
+    
+    return receipt;
+  } catch (error) {
+    console.error('Failed to claim composite reward:', error);
+    throw error;
+  }
+};
+
+// 获取所有组合议题
+export const getAllCompositeTopics = async (retryCount = 2, forceRefresh = false): Promise<CompositeTopic[]> => {
+  for (let i = 0; i < retryCount; i++) {
+    try {
+      console.log(`获取组合议题尝试 ${i + 1}/${retryCount}${forceRefresh ? ' [强制刷新]' : ''}`);
+      
+      const predictionContract = await getPredictionMarketContract();
+      
+      // 如果强制刷新，先获取最新的区块号确保读取最新状态
+      if (forceRefresh) {
+        const provider = getProvider();
+        const latestBlock = await provider.getBlockNumber();
+        console.log('强制刷新模式，当前最新区块:', latestBlock);
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+      
+      console.log('获取所有组合议题ID...');
+      
+      const compositeTopicIds = await predictionContract.getAllCompositeTopicIds();
+      console.log('组合议题IDs:', compositeTopicIds);
+      
+      const compositeTopics: CompositeTopic[] = [];
+      for (const id of compositeTopicIds) {
+        console.log('获取组合议题详情，ID:', id);
+        
+        const topic = await predictionContract.getCompositeTopic(id);
+        
+        const processedTopic: CompositeTopic = {
+          id: Number(topic.id),
+          creator: topic.creator,
+          title: topic.title,
+          referencedTopicIds: topic.referencedTopicIds.map((id: any) => Number(id)),
+          combinedOptions: topic.combinedOptions,
+          minBetAmount: ethers.formatEther(topic.minBetAmount),
+          totalPool: ethers.formatEther(topic.totalPool),
+          status: Number(topic.status),
+          winningOption: Number(topic.winningOption),
+          createdAt: Number(topic.createdAt)
+        };
+        
+        console.log(`组合议题 ${id} 状态:`, {
+          title: processedTopic.title,
+          status: processedTopic.status,
+          referencedTopics: processedTopic.referencedTopicIds.length,
+          totalPool: processedTopic.totalPool
+        });
+        
+        compositeTopics.push(processedTopic);
+      }
+      
+      console.log('所有组合议题处理完成:', compositeTopics.map(t => ({ 
+        id: t.id, 
+        title: t.title, 
+        status: t.status,
+        referencedTopics: t.referencedTopicIds.length
+      })));
+      
+      return compositeTopics;
+    } catch (error) {
+      console.error(`获取组合议题失败 (尝试 ${i + 1}/${retryCount}):`, error);
+      
+      if (i === retryCount - 1) {
+        console.log('所有获取组合议题尝试都失败了');
+        return [];
+      }
+      
+      // 等待1.5秒后重试
+      await new Promise(resolve => setTimeout(resolve, 1500));
+    }
+  }
+  
+  return [];
+};
+
+// 获取单个组合议题详情
+export const getCompositeTopic = async (topicId: number): Promise<CompositeTopic | null> => {
+  try {
+    const predictionContract = await getPredictionMarketContract();
+    const topic = await predictionContract.getCompositeTopic(topicId);
+    
+    return {
+      id: Number(topic.id),
+      creator: topic.creator,
+      title: topic.title,
+      referencedTopicIds: topic.referencedTopicIds.map((id: any) => Number(id)),
+      combinedOptions: topic.combinedOptions,
+      minBetAmount: ethers.formatEther(topic.minBetAmount),
+      totalPool: ethers.formatEther(topic.totalPool),
+      status: Number(topic.status),
+      winningOption: Number(topic.winningOption),
+      createdAt: Number(topic.createdAt)
+    };
+  } catch (error) {
+    console.error('Failed to get composite topic:', error);
+    return null;
+  }
+};
+
+// 获取组合议题的选项投注信息
+export const getCompositeOptionBetInfo = async (topicId: number): Promise<OptionBetInfo[]> => {
+  try {
+    const predictionContract = await getPredictionMarketContract();
+    const compositeTopic = await getCompositeTopic(topicId);
+    
+    if (!compositeTopic) {
+      return [];
+    }
+    
+    const optionBetInfos: OptionBetInfo[] = [];
+    const provider = getProvider();
+    let userAddress = '';
+    
+    try {
+      const signer = await provider.getSigner();
+      userAddress = await signer.getAddress();
+    } catch (e) {
+      // 用户未连接钱包
+    }
+    
+    // 获取每个选项的投注信息
+    for (let i = 0; i < compositeTopic.combinedOptions.length; i++) {
+      const totalBets = await predictionContract.getOptionBetTotal(topicId, i);
+      
+      let userBets = ethers.parseEther('0');
+      if (userAddress) {
+        userBets = await predictionContract.getUserBetAmount(topicId, userAddress, i);
+      }
+      
+      const totalBetsFormatted = ethers.formatEther(totalBets);
+      const userBetsFormatted = ethers.formatEther(userBets);
+      const totalPoolNum = parseFloat(compositeTopic.totalPool);
+      const percentage = totalPoolNum > 0 ? (parseFloat(totalBetsFormatted) / totalPoolNum) * 100 : 0;
+      
+      optionBetInfos.push({
+        optionIndex: i,
+        optionText: compositeTopic.combinedOptions[i],
+        totalBets: totalBetsFormatted,
+        userBets: userBetsFormatted,
+        percentage: Math.round(percentage * 100) / 100 // 保留2位小数
+      });
+    }
+    
+    return optionBetInfos;
+  } catch (error) {
+    console.error('Failed to get composite option bet info:', error);
+    return [];
+  }
+};
+
+// 获取组合议题的所有投注记录
+export const getCompositeBets = async (topicId: number): Promise<CompositeBet[]> => {
+  try {
+    const predictionContract = await getPredictionMarketContract();
+    const bets = await predictionContract.getCompositeBets(topicId);
+    
+    return bets.map((bet: any) => ({
+      bettor: bet.bettor,
+      amount: ethers.formatEther(bet.amount),
+      optionIndex: Number(bet.optionIndex),
+      timestamp: Number(bet.timestamp)
+    }));
+  } catch (error) {
+    console.error('Failed to get composite bets:', error);
+    return [];
+  }
+};
+
+// 获取可用于组合的议题（状态为 WAITING_FOR_SECOND_PLAYER 或 ACTIVE 的基础议题）
+export const getAvailableTopicsForComposite = async (): Promise<Topic[]> => {
+  try {
+    const allTopics = await getAllTopics();
+    
+    // 过滤出可用于组合的议题
+    return allTopics.filter(topic => 
+      !topic.isComposite && // 不是组合议题
+      (topic.status === 0 || topic.status === 1) && // 状态为等待或活跃
+      topic.options.length >= 2 // 至少有2个选项
+    );
+  } catch (error) {
+    console.error('Failed to get available topics for composite:', error);
+    return [];
   }
 };

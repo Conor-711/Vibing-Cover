@@ -10,6 +10,35 @@ export interface Topic {
   status: TopicStatus;
   winningOption: number;
   winner: string;
+  isComposite?: boolean;
+}
+
+export interface CompositeTopic {
+  id: number;
+  creator: string;
+  title: string;
+  referencedTopicIds: number[];
+  combinedOptions: string[];
+  minBetAmount: string;
+  totalPool: string;
+  status: TopicStatus;
+  winningOption: number;
+  createdAt: number;
+}
+
+export interface CompositeBet {
+  bettor: string;
+  amount: string;
+  optionIndex: number;
+  timestamp: number;
+}
+
+export interface OptionBetInfo {
+  optionIndex: number;
+  optionText: string;
+  totalBets: string;
+  userBets: string;
+  percentage: number;
 }
 
 export enum TopicStatus {
